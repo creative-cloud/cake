@@ -27,4 +27,7 @@
      <Reference Include="System.Xml" />
      <Reference Include="Microsoft.CSharp" />
    </ItemGroup>
+   <ItemGroup>
+     <Folder Include="Tools\DotNetCore\Watch\" />
+   </ItemGroup>
 </Project>

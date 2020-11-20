@@ -20,6 +20,7 @@ using Cake.Common.Tools.DotNetCore.Run;
 using Cake.Common.Tools.DotNetCore.Test;
 using Cake.Common.Tools.DotNetCore.Tool;
 using Cake.Common.Tools.DotNetCore.VSTest;
+using Cake.Common.Tools.DotNetCore.Watch;
 using Cake.Core;
 using Cake.Core.Annotations;
 using Cake.Core.IO;
@@ -496,6 +497,65 @@ namespace Cake.Common.Tools.DotNetCore
 
             var publisher = new DotNetCorePublisher(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
             publisher.Publish(project, settings);
+        }
+
+        /// <summary>
+        /// Publish all projects. 
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="arguments">The arguments.</param>
+        /// <param name="project">The projects path.</param>
+        /// <example>
+        /// <code>
+        /// DotNetCoreWatch("./src/*");
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Watch")]
+        [CakeNamespaceImport("Cake.Common.Tools.DotNetCore.Watch")]
+        public static void DotNetCoreWatch(this ICakeContext context,  string project, ProcessArgumentBuilder arguments)
+        {
+            context.DotNetCoreWatch(project, arguments, null);
+        }
+
+        // TODO: change comments
+
+        /// <summary>
+        /// Publish all projects.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="project">The projects path.</param>
+        /// <param name="settings">The settings.</param>
+        /// <param name="arguments">The arguments.</param>
+        /// <example>
+        /// <code>
+        /// var settings = new DotNetCorePublishSettings
+        /// {
+        ///     Framework = "netcoreapp2.0",
+        ///     Configuration = "Release",
+        ///     OutputDirectory = "./artifacts/"
+        /// };
+        ///
+        /// DotNetCorePublish("./src/*", settings);
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Watch")]
+        [CakeNamespaceImport("Cake.Common.Tools.DotNetCore.Watch")]
+        public static void DotNetCoreWatch(this ICakeContext context, string project, ProcessArgumentBuilder arguments, DotNetCoreWatchSettings settings)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (settings == null)
+            {
+                settings = new DotNetCoreWatchSettings();
+            }
+
+            var watcher = new DotNetCoreWatcher(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
+            watcher.Watch(project, arguments, settings);
         }
 
         /// <summary>
