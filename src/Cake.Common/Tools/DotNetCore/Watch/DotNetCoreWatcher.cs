@@ -37,7 +37,6 @@ namespace Cake.Common.Tools.DotNetCore.Watch
         /// Build the project using the specified path and settings.
         /// </summary>
         /// <param name="project">The target project path.</param>
-
         /// <param name="arguments">The arguments.</param>
         /// <param name="settings">The settings.</param>
         public void Watch(string project, ProcessArgumentBuilder arguments, DotNetCoreWatchSettings settings)
@@ -60,75 +59,34 @@ namespace Cake.Common.Tools.DotNetCore.Watch
 
             builder.Append("watch");
 
-            // Specific path?
             if (project != null)
-            {
-                builder.AppendQuoted(project);
-            }
-
-            // Output directory
-            if (settings.OutputDirectory != null)
             {
                 builder.Append("--project");
                 builder.AppendQuoted(project);
             }
 
-            // Runtime
-            if (!string.IsNullOrEmpty(settings.Runtime))
+            // Quiet
+            if (settings.Quiet)
             {
-                builder.Append("--runtime");
-                builder.Append(settings.Runtime);
+                builder.Append("--quiet");
             }
 
-            // Framework
-            if (!string.IsNullOrEmpty(settings.Framework))
+            // Verbose
+            if (settings.Verbose)
             {
-                builder.Append("--framework");
-                builder.Append(settings.Framework);
+                builder.Append("--verbose");
             }
 
-            // Configuration
-            if (!string.IsNullOrEmpty(settings.Configuration))
+            // List
+            if (settings.List)
             {
-                builder.Append("--configuration");
-                builder.Append(settings.Configuration);
+                builder.Append("--list");
             }
 
-            // Version suffix
-            if (!string.IsNullOrEmpty(settings.VersionSuffix))
+            // Version
+            if (settings.Version)
             {
-                builder.Append("--version-suffix");
-                builder.Append(settings.VersionSuffix);
-            }
-
-            // No Incremental
-            // if (settings.NoIncremental)
-            // {
-            //    builder.Append("--no-incremental");
-            // }
-            // TODO: check for no build and fore onwards and - incremental
-
-            // No Dependencies
-            if (settings.NoDependencies)
-            {
-                builder.Append("--no-dependencies");
-            }
-
-            // No Restore
-            if (settings.NoRestore)
-            {
-                builder.Append("--no-restore");
-            }
-
-            // No Logo
-            if (settings.NoLogo)
-            {
-                builder.Append("--nologo");
-            }
-
-            if (settings.MSBuildSettings != null)
-            {
-                builder.AppendMSBuildSettings(settings.MSBuildSettings, _environment);
+                builder.Append("--version");
             }
 
              // Arguments

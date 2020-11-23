@@ -28,10 +28,8 @@ Setup<BuildParameters>(context =>
     var parameters = new BuildParameters(context);
 
     // Increase verbosity?
-    if(parameters.IsMainCakeBranch && (context.Log.Verbosity != Verbosity.Diagnostic)) {
-        Information("Increasing verbosity to diagnostic.");
-        context.Log.Verbosity = Verbosity.Diagnostic;
-    }
+    Information("Increasing verbosity to diagnostic.");
+    context.Log.Verbosity = Verbosity.Diagnostic;
 
     Information("Building version {0} of Cake ({1}, {2}) using version {3} of Cake. (IsTagged: {4})",
         parameters.Version.SemVersion,
@@ -126,17 +124,21 @@ Task("Build")
 Task("Watch")
     .Does<BuildParameters>((context, parameters) =>
 {
- DotNetCoreWatch("./src/Cake.sln", 
-        new ProcessArgumentBuilder()
-            .AppendSwitchQuoted("--verbosity", "=", "quiet"),
-     new DotNetCoreWatchSettings()
-        {
-            Configuration = parameters.Configuration,
-            NoRestore = true,
-            MSBuildSettings = parameters.MSBuildSettings
-        });
+ DotNetCoreWatch("./src/Cake/Cake.csproj", 
+    new ProcessArgumentBuilder()
+            .Append("build"),
+    new DotNetCoreWatchSettings()
+    {
+        List = true,
+    });
 
-    // Build the solution.
+ DotNetCoreWatch("./src/Cake/Cake.csproj", 
+    new ProcessArgumentBuilder()
+            .Append("build"),
+    new DotNetCoreWatchSettings()
+    {
+        Version = true,
+    });
 });
 
 RunTarget(Argument("target", "Watch"));

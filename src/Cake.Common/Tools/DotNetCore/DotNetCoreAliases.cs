@@ -542,6 +542,7 @@ namespace Cake.Common.Tools.DotNetCore
         [CakeMethodAlias]
         [CakeAliasCategory("Watch")]
         [CakeNamespaceImport("Cake.Common.Tools.DotNetCore.Watch")]
+
         public static void DotNetCoreWatch(this ICakeContext context, string project, ProcessArgumentBuilder arguments, DotNetCoreWatchSettings settings)
         {
             if (context == null)
