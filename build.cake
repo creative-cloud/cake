@@ -133,8 +133,7 @@ Task("Watch")
     });
 
  DotNetCoreWatch("./src/Cake/Cake.csproj", 
-    new ProcessArgumentBuilder()
-            .Append("build"),
+    new ProcessArgumentBuilder(),
     new DotNetCoreWatchSettings()
     {
         Version = true,

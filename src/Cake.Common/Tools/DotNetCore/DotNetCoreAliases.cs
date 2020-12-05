@@ -500,11 +500,11 @@ namespace Cake.Common.Tools.DotNetCore
         }
 
         /// <summary>
-        /// Publish all projects. 
+        /// Publish all projects.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// <param name="arguments">The arguments.</param>
         /// <param name="project">The projects path.</param>
+        /// <param name="arguments">The arguments.</param>
         /// <example>
         /// <code>
         /// DotNetCoreWatch("./src/*");
